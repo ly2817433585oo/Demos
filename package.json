@@ -7,16 +7,37 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "chalk": "^4.1.0",
     "core-js": "^3.6.5",
+    "dat.gui": "^0.7.7",
+    "echarts": "^4.9.0",
+    "element-ui": "^2.14.0",
+    "js-cookie": "^2.2.1",
+    "mathjs": "^8.1.0",
+    "mockjs": "^1.1.0",
+    "nprogress": "^0.2.0",
+    "ol": "^6.4.3",
+    "ol-echarts": "^2.0.3",
+    "ol-ext": "^3.1.17",
+    "ol-wind": "^1.0.0-alpha.10",
+    "path-to-regexp": "^6.2.0",
+    "process": "^0.11.10",
+    "three": "^0.123.0",
+    "video.js": "^7.10.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "webpack": "^4.36.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "node-sass": "^5.0.0",
+    "sass": "^1.26.8",
+    "sass-loader": "^10.1.0",
     "vue-template-compiler": "^2.6.11"
   }
 }
