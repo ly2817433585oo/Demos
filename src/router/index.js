@@ -122,7 +122,7 @@ const routes = [{
               title: 'Wind',
               // icon:'el-icon-s-help'
             },
-            component: () => import('../views/ol/animation/windlayer.vue')
+            component: () => import('../views/ol/animation/tcc0105.vue')
           },
         ]
       },
@@ -209,6 +209,60 @@ const routes = [{
               title: 'Demo7',
             },
             component: () => import('../views/three/Demos/demo7.vue')
+          },
+        ]
+      },
+    ]
+  }, {
+    path: '/cesium',
+    redirect: '/cesium/index',
+    component: Home,
+    name: 'Cesium',
+    meta: {
+      title: 'Cesium',
+      icon: 'el-icon-s-help'
+    },
+    children: [{
+        path: 'index',
+        name: 'Home of Cesium',
+        meta: {
+          title: 'Home of Cesium',
+          // icon: 'el-icon-s-help'
+        },
+        component: () => import('@/views/three/Demos/demo4.vue')
+      },
+      {
+        path: 'Demos',
+        name: 'Demos',
+        meta: {
+          title: 'Demos',
+          // icon: 'el-icon-s-help'
+        },
+        hiddenChildren: true,
+        component: () => import('@/components/content/CardsList'),
+        children: [
+          {
+            path: 'cesiumdemo1',
+            name: 'demo1',
+            meta: {
+              title: 'Demo1',
+            },
+            component: () => import('../views/cesium/cesium-demo1.vue')
+          },
+          {
+            path: 'cesiumdemo2',
+            name: 'demo2',
+            meta: {
+              title: 'Demo2',
+            },
+            component: () => import('../views/cesium/SubMergeAnalysis.vue')
+          },{
+            path: 'cesiumdemo3',
+            name: 'demo3',
+            meta: {
+              title: 'Demo3',
+            },
+            component: () => import('../views/cesium/Water.vue')
           },
         ]
       },

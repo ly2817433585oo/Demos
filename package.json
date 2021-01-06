@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "cesium": "^1.77.0",
     "chalk": "^4.1.0",
     "core-js": "^3.6.5",
     "dat.gui": "^0.7.7",

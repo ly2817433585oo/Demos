@@ -1,6 +1,11 @@
 'use strict'
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 const defaultSettings = require('./src/settings')
+const cesiumSource = './node_modules/cesium/Source';
+const cesiumSource_ = './node_modules/cesium/Build';
+const cesiumWorkers = '../Build/Cesium/Workers';
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -75,9 +80,34 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        'cesium': resolve(cesiumSource),
+        'cesium_': resolve(cesiumSource_)
+
       }
-    }
+    },
+    plugins: [
+      new CopyWebpackPlugin(
+        [{
+            from: path.join(cesiumSource, cesiumWorkers),
+            to: 'Workers'
+          },
+          {
+            from: path.join(cesiumSource, 'Assets'),
+            to: 'Assets'
+          }, {
+            from: path.join(cesiumSource, 'Widgets'),
+            to: 'Widgets'
+          }, {
+            from: path.join(cesiumSource, 'ThirdParty/Workers'),
+            to: 'ThirdParty/Workers'
+          }
+        ]
+      ),
+      new webpack.DefinePlugin({
+        CESIUM_BASE_URL: JSON.stringify('./')
+      })
+    ],
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
@@ -109,7 +139,7 @@ module.exports = {
       })
       .end()
 
-      config
+    config
       .when(process.env.NODE_ENV !== 'development',
         config => {
           config

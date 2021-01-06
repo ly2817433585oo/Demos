@@ -5,6 +5,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '../node_modules/ol/ol.css'
+// import * as Cesium from 'cesium'
 // import Video from 'video.js'
 // import 'video.js/dist/video-js.css'
 
