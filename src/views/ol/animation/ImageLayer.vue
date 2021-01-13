@@ -1,14 +1,11 @@
 <template>
-  <div class="map-container"> 
+  <div class="map-container">
     <div id="map" ref="map"></div>
     <canvas ref="canvas"></canvas>
   </div>
 </template>
 
 <script>
-
-
-
 import LineString from "ol/geom/LineString";
 import ImageLayer from "ol/layer/Image";
 import ImageCanvasSource from "ol/source/ImageCanvas";
@@ -23,8 +20,8 @@ import airPollution from "@/assets/json/airp.json";
 import { fromLonLat } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 
-import {initMap} from '../lockin-ol'
- 
+import { initMap } from "../lockin-ol";
+
 import {
   create as createTransform,
   multiply as multiplyTransform,
@@ -36,42 +33,41 @@ import { getSquaredTolerance } from "ol/renderer/vector";
 import { getUserProjection, getTransformFromProjections } from "ol/proj";
 export default {
   name: "通过ImageLayer解决大量要素绘制卡顿问题",
-  data () {
+  data() {
     return {
-      map:{}  
-    }
+      map: {},
+    };
   },
   mounted() {
     this.map = initMap(this.$refs.map);
     var cvslayer = this.getCanvasLayer();
-    this.map.addLayer(cvslayer)
-    console.log(map);
+    this.map.addLayer(cvslayer);
   },
   methods: {
     getCanvasLayer() {
-      var format = new GeoJSON()
-      var features = format.readFeatures(airPollution)
+      var format = new GeoJSON();
+      var features = format.readFeatures(airPollution);
       var airpstyle = function (feat) {
         var nd = feat.values_.concen;
         var color = [];
-        if (nd <= 0.139) color = [0, 0, 0, 0]
-        else if (nd > 0.139 && nd <= 0.547) color = [245, 203, 174, 1]
-        else if (nd > 0.547 && nd <= 1.361) color = [235, 169, 136, 1]
-        else if (nd > 1.361 && nd <= 3.02) color = [224, 132, 101, 1]
-        else if (nd > 3.02 && nd <= 5.89) color = [214, 93, 69, 1]
-        else if (nd > 5.89 && nd <= 11.313) color = [204, 53, 39, 1]
+        if (nd <= 0.139) color = [0, 0, 0, 0];
+        else if (nd > 0.139 && nd <= 0.547) color = [245, 203, 174, 1];
+        else if (nd > 0.547 && nd <= 1.361) color = [235, 169, 136, 1];
+        else if (nd > 1.361 && nd <= 3.02) color = [224, 132, 101, 1];
+        else if (nd > 3.02 && nd <= 5.89) color = [214, 93, 69, 1];
+        else if (nd > 5.89 && nd <= 11.313) color = [204, 53, 39, 1];
         else if (nd > 11.313) color = [196, 10, 10, 1];
 
         return new Style({
           stroke: new Stroke({
             width: 0,
-            color: color
+            color: color,
           }),
           fill: new Fill({
-            color: color
-          })
-        })
-      }
+            color: color,
+          }),
+        });
+      };
       var cvs = this.$refs.canvas;
       var canvasLayer = new ImageLayer({
         source: new ImageCanvasSource({
@@ -90,7 +86,7 @@ export default {
               size,
               projection
             );
-            features.forEach((item) => {             
+            features.forEach((item) => {
               vc.drawFeature(item, airpstyle(item));
             });
             console.log(new Date().getTime());
@@ -99,7 +95,7 @@ export default {
           projection: "EPSG:3857",
         }),
       });
-      return canvasLayer
+      return canvasLayer;
     },
     getCanvasVectorContext(
       canvas,
@@ -131,7 +127,7 @@ export default {
         -center[0],
         -center[1]
       );
-      composeTransform( 
+      composeTransform(
         pixelTransform,
         size[0] / 2,
         size[1] / 2,
@@ -152,7 +148,7 @@ export default {
       if (userProjection) {
         userTransform = getTransformFromProjections(userProjection, projection);
       }
-      return new CanvasImmediateRenderer( 
+      return new CanvasImmediateRenderer(
         context,
         pixelRatio,
         extent,
@@ -163,9 +159,9 @@ export default {
       );
     },
   },
-  destroyed(){
+  destroyed() {
     console.log("destroyed");
-  }
+  },
 };
 </script>
 

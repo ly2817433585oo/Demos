@@ -5,16 +5,14 @@
 </template>
 
 <script>
-
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import Feature from "ol/Feature";
-import Style from "ol/style/Style";
-import Icon from "ol/style/Icon";
 import Point from "ol/geom/Point";
+import { Fill, Stroke, Style, Text, Icon } from "ol/style";
 import { fromLonLat } from "ol/proj";
-import EChartsLayer from 'ol-echarts'
-import {initMap} from '../lockin-ol.js'
+import EChartsLayer from "ol-echarts";
+import { initMap } from "../lockin-ol.js";
 export default {
   name: "ol-echarts迁徙图",
   mounted() {
@@ -23,7 +21,7 @@ export default {
   methods: {
     init() {
       var mapElement = this.$refs.map;
-      var map = initMap(mapElement)
+      var map = initMap(mapElement);
 
       var geoCoordMap = {
         1: [91.052219, 29.683377],
@@ -59,6 +57,7 @@ export default {
       var siteLayer = new VectorLayer({
         source: siteSource,
         style: function (feat) {
+          console.log(feat);
           var imgsrc = require("@/assets/icons/椭圆 798 拷贝 2.png");
           if (feat.values_.name === "final") {
             imgsrc = require("@/assets/icons/椭圆 798 拷贝 11.png");
@@ -68,11 +67,19 @@ export default {
               src: imgsrc,
               anchor: [0.5, 0.75],
             }),
+            text: new Text({
+              font: "bold 16px Mirosoft Yahei",
+              text: feat.values_.name,
+              fill: new Fill({
+                color: "#f00",
+              }),
+              offsetY: -18,
+            }),
           });
         },
       });
 
-      map.addLayer(siteLayer)
+      map.addLayer(siteLayer);
       var echartslayer = new EChartsLayer(getOption(geoCoordMap));
       echartslayer.appendTo(map);
 

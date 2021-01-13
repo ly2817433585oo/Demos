@@ -60,7 +60,7 @@ export default {
         view: new View({
           center: [13128268.478460422, 4261271.29476306],
           zoom: 10,
-          // minZoom: 10,
+          minZoom: 10,
           maxZoom: 13,
         }),
       });
@@ -147,7 +147,7 @@ export default {
       for (var k in coords) {
         // console.log(k);
         var f = new Feature({
-          radius: 0.7,
+          radius: Math.random() * 10,
           geometry: new Point(coords[k]),
         });
         pointsLayer.getSource().addFeature(f);
@@ -185,10 +185,6 @@ export default {
         blur: 70,
         radius: 45,
         opacity: 0.8,
-        weight: function(e) {
-          console.log(e.values_.radius);
-          return e.values_.radius
-        },
         gradient: [
           "rgb(28, 119, 36)",
           "rgb(40, 196, 53)",
@@ -199,13 +195,6 @@ export default {
       });
       map.addLayer(vector);
       map.addLayer(pointsLayer);
-
-      console.log(map.getLayers().array_);
-      // for(var i = 0 ;i<map.getLayers().length;i++) {
-        // map.removeLayer(
-      // }
-    
-      map.removeLayer(map.getLayers().array_[2])
       // console.log(pointsLayer.getSource().getFeatures());
     },
     click() {

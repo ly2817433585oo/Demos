@@ -262,7 +262,7 @@ const routes = [{
             meta: {
               title: 'Demo3',
             },
-            component: () => import('../views/cesium/Water.vue')
+            component: () => import('../views/cesium/VisuialFieldAnalysis.vue')
           },
         ]
       },

@@ -28,7 +28,7 @@ import Icon from "ol/style/Icon";
 import Point from "ol/geom/Point";
 import GeoJSON from "ol/format/GeoJSON";
 import tcc from "../../../assets/json/tcc0105.json";
-
+import { getFeaturesAtPixel } from "ol/Map";
 import Stroke from "ol/style/Stroke";
 import Fill from "ol/style/Fill";
 import Overlay from "ol/Overlay";
@@ -165,30 +165,42 @@ export default {
         var f = new Feature({
           name: k,
           geometry: new Point(coords[k]),
+          geomType:'Point'
         });
         cameralayer.getSource().addFeature(f);
       }
       var overlay = new Overlay({
         element: this.$refs.popup,
         positioning: "bottom-left",
-        offset:[10,-10]
+        offset: [10, -10],
       });
       this.overlay = overlay;
       map.addOverlay(overlay);
       map.addLayer(cameralayer);
+      console.log(map);
       map.on("click", (e) => {
         var coor = e.coordinate;
-        console.log(tccfeatures);
         console.log(e);
-        var j = isInArea(coor, tccfeatures);
-        if (j >= 0) {
-          for (var i = 0; i < tccfeatures.length; i++) {
-            tccfeatures[i].setStyle();
-          }
-          overlay.setPosition(
-            tccfeatures[j].getGeometry().getInteriorPoint().flatCoordinates
-          );
+        var cameraFeatures = cameralayer.getSource().getFeatures();
+        var features = map.getFeaturesAtPixel(e.pixel);
+        for (var i in features) {
+          if (features[i].values_.geomType == 'Point') {
+            console.log(features[i].getGeometry());
+            overlay.setPosition(
+              features[i].getGeometry().flatCoordinates
+            );
+          } 
         }
+
+        var j = isInArea(coor, cameraFeatures);
+        // if (j >= 0) {
+        //   for (var i = 0; i < tccfeatures.length; i++) {
+        //     tccfeatures[i].setStyle();
+        //   }
+        //   overlay.setPosition(
+        //     cameraFeatures[j].getGeometry().getInteriorPoint().flatCoordinates
+        //   );
+        // }
       });
 
       function isInArea(coor, feature) {
