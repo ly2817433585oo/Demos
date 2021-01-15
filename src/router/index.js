@@ -122,7 +122,7 @@ const routes = [{
               title: 'Wind',
               // icon:'el-icon-s-help'
             },
-            component: () => import('../views/ol/animation/tcc0105.vue')
+            component: () => import('../views/ol/animation/demo0114.vue')
           },
         ]
       },
